@@ -84,7 +84,7 @@ if(FETCH_LIBHDBPP)
 
     # For ease of use, we set the libhdb++ output to our projects build directory,
     # making linking and running easy
-    set_target_properties(libhdbpp_shared_library
+    set_target_properties(${BACKEND_TARGET_SHARED}
         PROPERTIES
             LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
 
@@ -94,10 +94,10 @@ elseif(NOT LIBHDBPP_PROJECT_BUILD AND NOT FETCH_LIBHDBPP)
     find_package(${BACKEND_NAME})
 
     # The find package must set the backend target variable to be valid
-    if(NOT DEFINED BACKEND_TARGET)
+    if(NOT DEFINED BACKEND_TARGET_SHARED)
         message(FATAL_ERROR "Backend ${BACKEND_NAME} does not define the
         BACKEND_TARGET variable needed to build.")
-    endif(NOT DEFINED BACKEND_TARGET)
+endif(NOT DEFINED BACKEND_TARGET_SHARED)
 endif()
 
 # Find tango if it has not already been found. Returns an interface library
@@ -136,7 +136,7 @@ add_executable(hdbpp_es ${SRC_FILES})
 target_link_libraries(hdbpp_es 
     PRIVATE 
         TangoInterfaceLibrary 
-	${BACKEND_TARGET})
+	${BACKEND_TARGET_SHARED})
 
 target_include_directories(hdbpp_es 
     PRIVATE 
@@ -148,7 +148,7 @@ set_target_properties(hdbpp_es
     PROPERTIES 
         OUTPUT_NAME ${HDBPP_ES_NAME}
         LINK_FLAGS "-Wl,--no-undefined"
-        CXX_STANDARD 11)
+        CXX_STANDARD 14)
 
 if(DO_CLANG_TIDY)
     set_target_properties(hdbpp_es 
