@@ -371,8 +371,8 @@ namespace HdbEventSubscriber_ns
         {
             string str;
             std::ifstream in(list_filename);
-            if(in.is_open())
-            {
+	    if(in.is_open())
+	    {
                 while (std::getline(in, str))
                 {
                     if(!str.empty())
@@ -445,16 +445,16 @@ namespace HdbEventSubscriber_ns
     //=============================================================================
     void HdbDevice::put_signal_property(vector<string> &prop)
     {
-	if(list_from_file)
-	{
-		std::ofstream out(list_filename, ios::trunc);
-		if(out.is_open())
-		{
-			for (const auto &e : prop) out << e << "\n";
-			out.close();
-		}
-		return;	
-	}
+        if(list_from_file)
+        {
+            std::ofstream out(list_filename, ios::trunc);
+            if(out.is_open())
+            {
+                for (const auto &e : prop) out << e << "\n";
+                out.close();
+            }
+            return;	
+        }
 
         Tango::DbData	data;
         data.push_back(Tango::DbDatum("AttributeList"));
