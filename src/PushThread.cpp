@@ -215,11 +215,14 @@ namespace HdbEventSubscriber_ns
         }
 #endif
         std::vector<std::shared_ptr<HdbCmdData>> cmds;
-        for(size_t i = 0; i < events_size; ++i)
-        {
-            cmds.push_back(events.front());
-            events.pop_front();
-        }
+	{
+        	omni_mutex_lock sync(new_data_mutex);
+		for(size_t i = 0; i < events_size; ++i)
+        	{
+            		cmds.push_back(events.front());
+            		events.pop_front();
+        	}
+	}
 
         return cmds;
     }
