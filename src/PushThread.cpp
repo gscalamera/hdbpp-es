@@ -94,10 +94,7 @@ namespace HdbEventSubscriber_ns
                 events_size = events.size();
                 //	Check if nb waiting more the stored one.
                 if (events_size > max_waiting)
-		{
-		    INFO_STREAM << __func__ << ": max_waiting changed: " << max_waiting << " -> " << events_size;
                     max_waiting = events_size;
-		}
                 
                 hdb_dev->AttributePendingNumber = events_size;
                 hdb_dev->AttributeMaxPendingNumber = max_waiting;
